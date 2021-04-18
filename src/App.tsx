@@ -15,7 +15,9 @@ import { SessionContext } from "./SessionContext";
 
 function App() {
   const [session, setSession] = useState<Session | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     handleIncomingRedirect({ restorePreviousSession: true }).then(() => {
       const session = getDefaultSession();
       if (session.info.isLoggedIn) {
@@ -23,8 +25,12 @@ function App() {
       } else {
         setSession(null);
       }
+      setIsLoading(false);
     });
   }, []);
+
+  if (isLoading) return <div className={styles.main}>Loading...</div>;
+
   return (
     <ThemeProvider>
       <div className={styles.main}>
