@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { ThemeProvider, BaseStyles, Button } from "@primer/components";
-import auth from "solid-auth-client";
+import {
+  login,
+  handleIncomingRedirect,
+  getDefaultSession,
+  Session,
+} from "@inrupt/solid-client-authn-browser";
 
 import styles from "./App.module.css";
 import Profile from "./components/Profile";
 import { FormSection } from "./components/Profile/_components/FormSection";
+import { SessionContext } from "./SessionContext";
 
 function App() {
-  const [loggedInWebId, setLoggedInWebId] = useState("");
+  const [session, setSession] = useState<Session | null>(null);
   useEffect(() => {
-    auth.currentSession().then((session) => {
-      console.debug(session);
-      if (session && session.webId) {
-        setLoggedInWebId(session.webId);
+    handleIncomingRedirect({ restorePreviousSession: true }).then(() => {
+      const session = getDefaultSession();
+      if (session.info.isLoggedIn) {
+        setSession(session);
       } else {
-        setLoggedInWebId("");
+        setSession(null);
       }
     });
   }, []);
@@ -23,8 +29,10 @@ function App() {
     <ThemeProvider>
       <div className={styles.main}>
         <BaseStyles>
-          {!!loggedInWebId ? (
-            <Profile webId={loggedInWebId} />
+          {!!session && session.info.webId ? (
+            <SessionContext.Provider value={session}>
+              <Profile />
+            </SessionContext.Provider>
           ) : (
             <>
               <Formik
@@ -33,7 +41,9 @@ function App() {
                   const { webId } = values;
                   if (webId) {
                     const webIdObject = new URL(webId);
-                    auth.login(webIdObject.protocol + webIdObject.host);
+                    login({
+                      oidcIssuer: webIdObject.protocol + webIdObject.host,
+                    });
                   }
                 }}
               >

@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { ButtonPrimary, Text, ButtonDanger } from "@primer/components";
 import auth from "solid-auth-client";
+import { Session } from "@inrupt/solid-client-authn-browser";
+
 import { solidProfile, SolidProfileShape, EmailShape } from "../../shapes/shex";
+import { SessionContext } from "../../SessionContext";
 
 import { FormSection } from "./_components/FormSection";
 import styles from "./Profile.module.css";
 
-export const Profile: React.FC<{ webId: string }> = ({ webId }) => {
+export const Profile: React.FC = () => {
+  const { info, fetch } = useContext(SessionContext) as Session & {
+    info: { webId: string };
+  };
   const [profile, setProfile] = useState<SolidProfileShape | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { webId } = info;
 
   useEffect(() => {
+    solidProfile.fetcher._fetch = fetch;
     solidProfile
       .findOne({
         from: webId,
@@ -24,7 +32,7 @@ export const Profile: React.FC<{ webId: string }> = ({ webId }) => {
           setProfile(data);
         }
       });
-  }, [webId]);
+  }, [webId, fetch]);
 
   if (error) {
     return <div>{error}</div>;

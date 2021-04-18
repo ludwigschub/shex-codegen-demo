@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://ludwigschubi.github.io/shex-codegen-demo/",
   "dependencies": {
+    "@inrupt/solid-client-authn-browser": "^1.7.4",
     "@primer/components": "^27.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
