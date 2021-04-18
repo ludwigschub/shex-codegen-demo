@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/shex-codegen-demo/static/css/main.dd8a6b5c.chunk.css",
-    "main.js": "/shex-codegen-demo/static/js/main.dd113c6c.chunk.js",
-    "main.js.map": "/shex-codegen-demo/static/js/main.dd113c6c.chunk.js.map",
+    "main.js": "/shex-codegen-demo/static/js/main.fd27d3d2.chunk.js",
+    "main.js.map": "/shex-codegen-demo/static/js/main.fd27d3d2.chunk.js.map",
     "runtime-main.js": "/shex-codegen-demo/static/js/runtime-main.a4c01a21.js",
     "runtime-main.js.map": "/shex-codegen-demo/static/js/runtime-main.a4c01a21.js.map",
-    "static/js/2.68409430.chunk.js": "/shex-codegen-demo/static/js/2.68409430.chunk.js",
-    "static/js/2.68409430.chunk.js.map": "/shex-codegen-demo/static/js/2.68409430.chunk.js.map",
+    "static/js/2.24e2153f.chunk.js": "/shex-codegen-demo/static/js/2.24e2153f.chunk.js",
+    "static/js/2.24e2153f.chunk.js.map": "/shex-codegen-demo/static/js/2.24e2153f.chunk.js.map",
     "index.html": "/shex-codegen-demo/index.html",
     "static/css/main.dd8a6b5c.chunk.css.map": "/shex-codegen-demo/static/css/main.dd8a6b5c.chunk.css.map",
-    "static/js/2.68409430.chunk.js.LICENSE.txt": "/shex-codegen-demo/static/js/2.68409430.chunk.js.LICENSE.txt"
+    "static/js/2.24e2153f.chunk.js.LICENSE.txt": "/shex-codegen-demo/static/js/2.24e2153f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a4c01a21.js",
-    "static/js/2.68409430.chunk.js",
+    "static/js/2.24e2153f.chunk.js",
     "static/css/main.dd8a6b5c.chunk.css",
-    "static/js/main.dd113c6c.chunk.js"
+    "static/js/main.fd27d3d2.chunk.js"
   ]
 }
