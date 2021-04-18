@@ -4,7 +4,11 @@ import { ButtonPrimary, Text, ButtonDanger } from "@primer/components";
 import auth from "solid-auth-client";
 import { Session } from "@inrupt/solid-client-authn-browser";
 
-import { solidProfile, SolidProfileShape, EmailShape } from "../../shapes/shex";
+import {
+  solidProfile,
+  SolidProfileShape,
+  EmailShape,
+} from "../../generated/shex";
 import { SessionContext } from "../../SessionContext";
 
 import { FormSection } from "./_components/FormSection";
@@ -14,7 +18,10 @@ export const Profile: React.FC = () => {
   const { info, fetch } = useContext(SessionContext) as Session & {
     info: { webId: string };
   };
-  const [profile, setProfile] = useState<SolidProfileShape | null>(null);
+  const [profile, setProfile] = useState<Partial<SolidProfileShape> | null>(
+    null
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { webId } = info;
 
@@ -38,6 +45,8 @@ export const Profile: React.FC = () => {
     return <div>{error}</div>;
   } else if (!profile) {
     return <div>Loading...</div>;
+  } else if (isSubmitting) {
+    return <div>Updating...</div>;
   }
 
   const { name, hasEmail } = profile as SolidProfileShape;
@@ -56,8 +65,8 @@ export const Profile: React.FC = () => {
           ),
         }}
         onSubmit={async (data) => {
-          console.debug(data);
-          const result = await solidProfile.update({
+          setIsSubmitting(true);
+          const { data: newProfile } = await solidProfile.update({
             doc: webId,
             data: {
               id: webId,
@@ -67,7 +76,8 @@ export const Profile: React.FC = () => {
               } as EmailShape,
             },
           });
-          console.log(result);
+          setProfile(newProfile as Partial<SolidProfileShape>);
+          setIsSubmitting(false);
         }}
       >
         {({ values, handleChange, dirty, touched }) => (
