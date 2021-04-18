@@ -11292,10 +11292,10 @@ shex-codegen@^0.3.0:
     nodemon "^2.0.7"
     prettier "^2.2.1"
 
-shex-methods@^0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/shex-methods/-/shex-methods-0.1.17.tgz#a72a10bfb8582eb543c4fcb3d4164f86bd8c3e32"
-  integrity sha512-JwiYG/5RZWMj4TuCTKrrPdNEJjQRG0JEIw/MbxQ11ui56rM7atoB9tXYgDNuzHL1/jiXRFBarPwCDL5HVSJ9NA==
+shex-methods@^0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/shex-methods/-/shex-methods-0.1.18.tgz#b31b887611ed7e88f2db2abb6e8f8c7be62f5fc3"
+  integrity sha512-D5wl/Tuq2RGJspPn0JRUE4Eah3HO+eQLEijcYepppo7MrW6gGLndb8yWYgnru/WG6xwRjJx0eX30VlKtKLBJPA==
   dependencies:
     camelcase "^6.2.0"
     n3 "0.10.0"

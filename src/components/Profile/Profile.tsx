@@ -37,7 +37,7 @@ export const Profile: React.FC<{ webId: string }> = ({ webId }) => {
   return (
     <>
       <Text fontSize="2em" marginBottom="16px">
-        Hello {name}
+        Hello, {name}
       </Text>
       <Formik
         initialValues={{
