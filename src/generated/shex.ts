@@ -1,9 +1,10 @@
 import { NamedNode, Literal } from "rdflib";
-import { Shape } from "shex-methods";
 
 export interface BasicShape {
   id: string;
 }
+
+import { Shape } from "shex-methods";
 
 export type SolidProfileShape = {
   hasEmail?: EmailShape | EmailShape[]; // The person's email.
