@@ -8,6 +8,7 @@ import {
   solidProfile,
   SolidProfileShape,
   EmailShape,
+  EmailShapeCreateArgs,
 } from "../../generated/shex";
 import { SessionContext } from "../../SessionContext";
 
@@ -72,8 +73,8 @@ export const Profile: React.FC = () => {
               id: webId,
               name: data.name,
               hasEmail: {
-                value: data.email && "mailto:" + data.email,
-              } as EmailShape,
+                value: data.email && new URL("mailto:" + data.email),
+              } as EmailShapeCreateArgs,
             },
           });
           setProfile(newProfile as Partial<SolidProfileShape>);

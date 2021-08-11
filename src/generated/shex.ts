@@ -1,23 +1,38 @@
 import { NamedNode, Literal } from "rdflib";
 
-export interface BasicShape {
-  id: string;
-}
-
 import { Shape } from "shex-methods";
 
 export type SolidProfileShape = {
+  id: string; // the url of a node of this shape
   hasEmail?: EmailShape | EmailShape[]; // The person's email.
+  name?: string; // An alternate way to define a person's name
+} & {
+  type: (
+    | SolidProfileShapeType.SchemPerson
+    | SolidProfileShapeType.FoafPerson
+  )[]; // Defines the node as a Person
+};
+
+export type SolidProfileShapeCreateArgs = {
+  id?: string | NamedNode; // the url to match or create the node with e.g. 'https://example.com#this', 'https://example.com/profile/card#me'
+  hasEmail?:
+    | URL
+    | NamedNode
+    | EmailShapeCreateArgs
+    | (URL | NamedNode | EmailShapeCreateArgs)[]; // The person's email.
   name?: string | Literal; // An alternate way to define a person's name
 } & {
   type: (
     | SolidProfileShapeType.SchemPerson
     | SolidProfileShapeType.FoafPerson
   )[]; // Defines the node as a Person
-} & BasicShape;
+};
+
+export type SolidProfileShapeUpdateArgs = Partial<SolidProfileShapeCreateArgs>;
 
 export type EmailShape = {
-  value: string | NamedNode; // The value of an email as a mailto link (Example <mailto:jane@example.com>)
+  id: string; // the url of a node of this shape
+  value: string; // The value of an email as a mailto link (Example <mailto:jane@example.com>)
 } & {
   type?: (
     | EmailShapeType.Dom
@@ -32,7 +47,28 @@ export type EmailShape = {
     | EmailShapeType.Work
     | EmailShapeType.X400
   )[]; // The type of email.
-} & BasicShape;
+};
+
+export type EmailShapeCreateArgs = {
+  id?: string | NamedNode; // the url to match or create the node with e.g. 'https://example.com#this', 'https://example.com/profile/card#me'
+  value: URL | NamedNode; // The value of an email as a mailto link (Example <mailto:jane@example.com>)
+} & {
+  type?: (
+    | EmailShapeType.Dom
+    | EmailShapeType.Home
+    | EmailShapeType.Isdn
+    | EmailShapeType.Internet
+    | EmailShapeType.Intl
+    | EmailShapeType.Label
+    | EmailShapeType.Parcel
+    | EmailShapeType.Postal
+    | EmailShapeType.Pref
+    | EmailShapeType.Work
+    | EmailShapeType.X400
+  )[]; // The type of email.
+};
+
+export type EmailShapeUpdateArgs = Partial<EmailShapeCreateArgs>;
 
 export enum SolidProfileShapeType {
   SchemPerson = "http://schema.org/Person",
@@ -103,7 +139,10 @@ srs:EmailShape EXTRA a {
 }
 `;
 
-export const solidProfile = new Shape<SolidProfileShape>({
+export const solidProfile = new Shape<
+  SolidProfileShape,
+  SolidProfileShapeCreateArgs
+>({
   id: "https://shaperepo.com/schemas/solidProfile#SolidProfileShape",
   shape: solidProfileShex,
   context: SolidProfileShapeContext,
@@ -111,7 +150,7 @@ export const solidProfile = new Shape<SolidProfileShape>({
   childContexts: [EmailShapeContext],
 });
 
-export const email = new Shape<EmailShape>({
+export const email = new Shape<EmailShape, EmailShapeCreateArgs>({
   id: "https://shaperepo.com/schemas/solidProfile#EmailShape",
   shape: solidProfileShex,
   context: EmailShapeContext,
